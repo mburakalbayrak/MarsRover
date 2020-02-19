@@ -1,0 +1,8 @@
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\bin\Debug\netstandard2.0\MarsRover.Model.deps.json
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\bin\Debug\netstandard2.0\MarsRover.Model.dll
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\bin\Debug\netstandard2.0\MarsRover.Model.pdb
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\obj\Debug\netstandard2.0\MarsRover.Model.csprojAssemblyReference.cache
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\obj\Debug\netstandard2.0\MarsRover.Model.AssemblyInfoInputs.cache
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\obj\Debug\netstandard2.0\MarsRover.Model.AssemblyInfo.cs
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\obj\Debug\netstandard2.0\MarsRover.Model.dll
+C:\Users\B.Albayrak\source\repos\MarsRover\MarsRover.Model\obj\Debug\netstandard2.0\MarsRover.Model.pdb
