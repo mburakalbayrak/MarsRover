@@ -12,42 +12,37 @@ namespace MarsRover.ConsoleApp
     {
         static void Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
-            .AddSingleton<IMoveService, MoveService>()
-            .BuildServiceProvider();
-
-            Console.Write("Enter the plateau's upper-right coordinates (ex. 5 5) :");
-            var maxPoints = Console.ReadLine().Trim().Split(' ').Select(int.Parse).ToList();
-
-            Console.Write("Enter the rover's start position (ex. 1 1 N) :");
-            var startPositions = Console.ReadLine().Trim().Split(' ');
-
-            Position position = new Position();
-
             try
             {
-                if (startPositions.Count() == 3)
+                Console.Write("Enter the plateau's upper-right coordinates (ex. 5 5) :");
+                var maxPoints = Console.ReadLine().Trim().Split(' ').Select(int.Parse).ToList();
+                CommandHelper.CheckMaxPoints(maxPoints);
+
+                Console.Write("Enter the rover's start position (ex. 1 1 N) :");
+                var startPositions = Console.ReadLine().Trim().Split(' ');
+
+                Position position = new Position
                 {
+                    XCoordinate = Convert.ToInt32(startPositions[0]),
+                    YCoordinate = Convert.ToInt32(startPositions[1]),
+                    Direction = (Directions)Enum.Parse(typeof(Directions), startPositions[2].ToUpper())
+                };
 
-                    position.XCoordinate = Convert.ToInt32(startPositions[0]);
-                    position.YCoordinate = Convert.ToInt32(startPositions[1]);
-                    position.Direction = (Directions)Enum.Parse(typeof(Directions), startPositions[2].ToUpper());
+                CommandHelper.CheckPosition(position, maxPoints);
 
-                    Console.Write("Enter rover's moving sequence (ex. LMRMRMM) :");
-                    var moves = Console.ReadLine().ToUpper();
+                var serviceProvider = new ServiceCollection()
+                .AddSingleton<IMoveService, MoveService>()
+                .BuildServiceProvider();
 
-                    var moveService = serviceProvider.GetService<IMoveService>();
+                Console.Write("Enter rover's moving sequence (ex. LMRMRMM) :");
+                var moves = Console.ReadLine().ToUpper();
 
-                    StartMove.Moving(position, maxPoints, moves, moveService);
+                var moveService = serviceProvider.GetService<IMoveService>();
 
-                    Console.WriteLine(string.Format(Environment.NewLine + "Current Position is: {0} {1} {2}", position.XCoordinate, position.YCoordinate, position.Direction));
-                    Console.ReadLine();
-                }
-                else
-                {
-                    Console.WriteLine("StartPosition is invalid.");
-                    Console.ReadLine();
-                }
+                CommandHelper.Moving(position, maxPoints, moves, moveService);
+
+                Console.WriteLine(string.Format(Environment.NewLine + "Current Position is: {0} {1} {2}", position.XCoordinate, position.YCoordinate, position.Direction));
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
