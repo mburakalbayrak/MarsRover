@@ -8,5 +8,7 @@ namespace MarsRover.Business.Abstract
     public interface IMoveService
     {
         void MoveOn(Position position);
+        void RotateLeft(Position position);
+        void RotateRight(Position position);
     }
 }

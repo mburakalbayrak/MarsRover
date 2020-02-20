@@ -8,7 +8,7 @@ namespace MarsRover.ConsoleApp.Helper
 {
     public class StartMove
     {
-        public static void Moving(Position position, List<int> maxPoints, string moves, IMoveService moveService, ITurnLeftService turnleftService, ITurnRightService turnRightService )
+        public static void Moving(Position position, List<int> maxPoints, string moves, IMoveService moveService)
         {
             foreach (var move in moves)
             {
@@ -18,10 +18,10 @@ namespace MarsRover.ConsoleApp.Helper
                         moveService.MoveOn(position);
                         break;
                     case 'L':
-                        turnleftService.RotateLeft(position);
+                        moveService.RotateLeft(position);
                         break;
                     case 'R':
-                        turnRightService.RotateRight(position);
+                        moveService.RotateRight(position);
                         break;
                     default:
                         Console.WriteLine($"Invalid Character {move}");
@@ -30,7 +30,7 @@ namespace MarsRover.ConsoleApp.Helper
 
                 if (position.XCoordinate < 0 || position.XCoordinate > maxPoints[0] || position.YCoordinate < 0 || position.YCoordinate > maxPoints[1])
                 {
-                    throw new Exception($"Oops! Position can not be beyond bounderies (0 , 0) and ({maxPoints[0]} , {maxPoints[1]})");
+                    throw new Exception($"Error! Position can not be beyond bounderies (0 , 0) and ({maxPoints[0]} , {maxPoints[1]}). Current position is X:{position.XCoordinate},Y{position.YCoordinate}");
                 }
             }
         }

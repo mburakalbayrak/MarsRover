@@ -14,8 +14,6 @@ namespace MarsRover.ConsoleApp
         {
             var serviceProvider = new ServiceCollection()
             .AddSingleton<IMoveService, MoveService>()
-            .AddSingleton<ITurnLeftService, TurnLeftService>()
-            .AddSingleton<ITurnRightService, TurnRightService>()
             .BuildServiceProvider();
 
             Console.Write("Enter the plateau's upper-right coordinates (ex. 5 5) :");
@@ -26,34 +24,36 @@ namespace MarsRover.ConsoleApp
 
             Position position = new Position();
 
-            if (startPositions.Count() == 3)
+            try
             {
-                position.XCoordinate = Convert.ToInt32(startPositions[0]);
-                position.YCoordinate = Convert.ToInt32(startPositions[1]);
-                position.Direction = (Directions)Enum.Parse(typeof(Directions), startPositions[2].ToUpper());
+                if (startPositions.Count() == 3)
+                {
 
-                Console.Write("Enter rover's moving sequence (ex. LMRMRMM) :");
-                var moves = Console.ReadLine().ToUpper();
+                    position.XCoordinate = Convert.ToInt32(startPositions[0]);
+                    position.YCoordinate = Convert.ToInt32(startPositions[1]);
+                    position.Direction = (Directions)Enum.Parse(typeof(Directions), startPositions[2].ToUpper());
 
-                var moveService = serviceProvider.GetService<IMoveService>();
-                var turnLeftService = serviceProvider.GetService<ITurnLeftService>();
-                var turnRightService = serviceProvider.GetService<ITurnRightService>();
+                    Console.Write("Enter rover's moving sequence (ex. LMRMRMM) :");
+                    var moves = Console.ReadLine().ToUpper();
 
-                StartMove.Moving(position, maxPoints, moves, moveService, turnLeftService, turnRightService);
+                    var moveService = serviceProvider.GetService<IMoveService>();
 
-                Console.WriteLine(string.Format(Environment.NewLine + "Current Position is: {0} {1} {2}", position.XCoordinate, position.YCoordinate, position.Direction));
+                    StartMove.Moving(position, maxPoints, moves, moveService);
+
+                    Console.WriteLine(string.Format(Environment.NewLine + "Current Position is: {0} {1} {2}", position.XCoordinate, position.YCoordinate, position.Direction));
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.WriteLine("StartPosition is invalid.");
+                    Console.ReadLine();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
                 Console.ReadLine();
-
-                ////Console.Write(Environment.NewLine + "0: Exit \n1: Retry\nSelect :");
-                ////ConsoleKeyInfo key = Console.ReadKey();
-                ////if (key.Key != ConsoleKey.D1 && key.Key != ConsoleKey.NumPad1) return;
             }
-            else
-            {
-                Console.WriteLine("StartPosition is invalid.");
-            }
-
-            
         }
     }
 }
